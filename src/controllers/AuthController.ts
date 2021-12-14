@@ -1,13 +1,13 @@
-import { Response, NextFunction } from "express";
+import { Response, NextFunction, Express } from "express";
 import jwt from "jsonwebtoken";
 import { User } from "../models";
 import { AuthRequestInterface } from "../interfaces";
 
 class Auth {
-  async getToken(req: AuthRequestInterface, res: Response, next: NextFunction) {
+  async getToken(req: Request, res: Response, next: NextFunction) {
     try {
       const data = {
-        user: req.user._id,
+        user: req.currentUser._id,
       };
 
       const JWT_SECRET = process.env.JWT_SECRET;
@@ -19,7 +19,7 @@ class Auth {
         expiresIn: "60d",
       });
 
-      const currentUser = await User.findOne({ _id: req.user?._id }).select(
+      const currentUser = await User.findOne({ _id: req.currentUser._id }).select(
         "-password"
       );
 
@@ -41,3 +41,6 @@ class Auth {
     }
   }
 }
+
+const AuthController = new Auth();
+export { AuthController }
