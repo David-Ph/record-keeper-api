@@ -12,3 +12,8 @@ mongoose
   } as ConnectOptions)
   .then(() => console.log("Connected to MongoDB!"))
   .catch((err) => console.log(err));
+
+
+import {User} from "./User";
+
+export {User}
