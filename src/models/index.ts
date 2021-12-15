@@ -1,7 +1,6 @@
 import * as dotenv from "dotenv";
 import mongoose, { ConnectOptions } from "mongoose";
 
-dotenv.config({ path: __dirname + `/.env.${process.env.NODE_ENV}` });
 
 const MONGO_URI: string = process.env.MONGO_URI ?? "";
 

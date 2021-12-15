@@ -1,10 +1,15 @@
 //? Import dependencies
+import path from "path";
 import * as dotenv from "dotenv";
-dotenv.config({ path: __dirname + `/.env.${process.env.NODE_ENV}` });
+dotenv.config({
+  path: path.join(__dirname, `../.env.${process.env.NODE_ENV}`),
+});
+
 import express, { Request, Response, NextFunction } from "express";
 
 //? Import Files
 import errorHandler from "./middlewares/errorHandler/errorHandler";
+import UserRouter from "./routes/UserRouter";
 
 //? Express Settings
 const app = express();
@@ -18,6 +23,8 @@ app.get("/api/v1/check", (req: Request, res: Response, next: NextFunction) => {
     environment: `${process.env.NODE_ENV}`,
   });
 });
+
+app.use("/api/v1/auth", UserRouter);
 
 app.all("*", async (req, res, next) => {
   try {
