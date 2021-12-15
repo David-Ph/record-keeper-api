@@ -92,4 +92,45 @@ passport.use(
 );
 //? End Logic to login
 
-export { register, login }
+// ? Logic for User Authorization
+const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
+  passport.authorize("user", { session: false }, (err, user, info) => {
+    if (err) {
+      return next({ message: err.message, statusCode: 403 });
+    }
+
+    if (!user) {
+      return next({ message: info.message, statusCode: 403 });
+    }
+
+    req.currentUser = user;
+
+    next();
+  })(req, res, next);
+};
+
+passport.use(
+  "user",
+  new JWTStrategy(
+    {
+      secretOrKey: process.env.JWT_SECRET,
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    },
+    async (token, done) => {
+      try {
+        const data = await User.findOne({ _id: token.user });
+
+        if (data) {
+          return done(null, data);
+        }
+
+        return done(null, false, { message: "Forbidden access" });
+      } catch (error) {
+        return done(error, false, { message: "Forbidden access" });
+      }
+    }
+  )
+);
+// ? end of logic for user authorization
+
+export { register, login, authenticateUser };
