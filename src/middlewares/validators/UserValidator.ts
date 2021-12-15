@@ -145,6 +145,29 @@ class Validator {
         );
       }
 
+    //   if (req.files) {
+    //     if (req.files.vendor_avatar) {
+    //       if (
+    //         !req.files.vendor_avatar[0].mimetype.startsWith("image") ||
+    //         req.files.vendor_avatar[0].size > 3000000
+    //       ) {
+    //         errorMessages.push("File must be an image and less than 3MB");
+    //       } else {
+    //         req.body.vendor_avatar = req.files.vendor_avatar[0].path;
+    //       }
+    //     }
+    //     if (req.files.vendor_header) {
+    //       if (
+    //         !req.files.vendor_header[0].mimetype.startsWith("image") ||
+    //         req.files.vendor_header[0].size > 3000000
+    //       ) {
+    //         errorMessages.push("File must be an image and less than 3MB");
+    //       } else {
+    //         req.body.vendor_header = req.files.vendor_header[0].path;
+    //       }
+    //     }
+    //   }
+
       if (errorMessages.length > 0) {
         return next({ statusCode: 400, messages: errorMessages });
       }
