@@ -1,6 +1,11 @@
-import { Request, Response } from "express";
-import { Express } from "express-serve-static-core";
 import { UserInterface } from "../../src/interfaces";
+import { Express } from "express-serve-static-core";
+
+declare module "express-serve-static-core" {
+  interface Request {
+    currentUser?: UserInterface;
+  }
+}
 
 // declare global {
 //   namespace Express {

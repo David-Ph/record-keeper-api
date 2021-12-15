@@ -7,8 +7,8 @@ import { ExtractJwt } from "passport-jwt";
 import { User } from "../../models";
 
 //? Logic to signup
-exports.register = (req: Request, res: Response, next: NextFunction) => {
-  passport.authenticate("signup", { session: false }, (err, user, info) => {
+const register = (req: Request, res: Response, next: NextFunction) => {
+  passport.authenticate("register", { session: false }, (err, user, info) => {
     if (err) {
       return next({ message: err.message, statusCode: 401 });
     }
@@ -17,14 +17,14 @@ exports.register = (req: Request, res: Response, next: NextFunction) => {
       return next({ message: err.message, statusCode: 401 });
     }
 
-    req.user = user;
+    req.currentUser = user;
 
     next();
   })(req, res, next);
 };
 
 passport.use(
-  "signup",
+  "register",
   new LocalStrategy(
     {
       usernameField: "email",
@@ -45,8 +45,8 @@ passport.use(
 //? End Logic to signup
 
 //? Logic to signin
-exports.signin = (req: Request, res: Response, next: NextFunction) => {
-  passport.authenticate("signin", { session: false }, (err, user, info) => {
+const login = (req: Request, res: Response, next: NextFunction) => {
+  passport.authenticate("login", { session: false }, (err, user, info) => {
     if (err) {
       return next({ message: err.message, statusCode: 401 });
     }
@@ -55,14 +55,14 @@ exports.signin = (req: Request, res: Response, next: NextFunction) => {
       return next({ message: info.message, statusCode: 401 });
     }
 
-    req.user = user;
+    req.currentUser = user;
 
     next();
   })(req, res, next);
 };
 
 passport.use(
-  "signin",
+  "login",
   new LocalStrategy(
     {
       usernameField: "email",
@@ -90,4 +90,6 @@ passport.use(
     }
   )
 );
-//? End Logic to signin
+//? End Logic to login
+
+export { register, login }
