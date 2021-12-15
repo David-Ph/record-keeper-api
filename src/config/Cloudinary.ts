@@ -10,15 +10,15 @@ cloudinary.config({
 declare interface cloudinaryOptions extends Options {
   params: {
     folder: string;
-    format: (a: any, b: any) => any;
+    allowed_formats: string[];
   };
 }
 
 const multerOpts: cloudinaryOptions = {
   cloudinary: cloudinary,
   params: {
-    folder: "record-keeper",
-    format: async (req, file) => ["png", "jpg", "jpeg"],
+    folder: "records-keeper",
+    allowed_formats: ["png", "jpeg", "jpg"],
   },
 };
 

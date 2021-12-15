@@ -30,7 +30,7 @@ class Validator {
         errorMessages.push("Password should not be empty");
       }
 
-      if (validator.isLength(req.body.username, { min: 3, max: 25 })) {
+      if (!validator.isLength(req.body.username, { min: 3, max: 25 })) {
         errorMessages.push("Username has to be between 3 to 25 characters");
       }
 
@@ -103,21 +103,17 @@ class Validator {
     next: NextFunction
   ) {
     try {
-      const findUser = await User.findOne({ _id: req.params.id });
+      const findUser = await User.findOne({ _id: req.currentUser?.id });
       if (!findUser) {
         return next({ statusCode: 404, message: "User not found" });
       }
       //   this is to ensure that blank body will not replace previous data
       req.body.username = req.body.username ?? findUser.username;
-      req.body.email = req.body.email ?? "";
+      req.body.email = req.body.email ?? findUser.email;
       req.body.password = req.body.password ?? findUser.password;
       req.body.avatar = req.body.avatar ?? findUser.avatar;
 
       const errorMessages: string[] = [];
-
-      if (!validator.isEmpty(req.body.email.toString())) {
-        errorMessages.push("You're not allowed to change your email");
-      }
 
       if (validator.isEmpty(req.body.username.toString())) {
         errorMessages.push("Username should not be empty");
@@ -127,12 +123,12 @@ class Validator {
         errorMessages.push("Password should not be empty");
       }
 
-      if (validator.isLength(req.body.username, { min: 3, max: 25 })) {
+      if (!validator.isLength(req.body.username, { min: 3, max: 25 })) {
         errorMessages.push("Username has to be between 3 to 25 characters");
       }
 
       if (
-        validator.isStrongPassword(req.body.password, {
+        !validator.isStrongPassword(req.body.password, {
           minLength: 6,
           minLowercase: 1,
           minUppercase: 1,
@@ -145,28 +141,13 @@ class Validator {
         );
       }
 
-    //   if (req.files) {
-    //     if (req.files.vendor_avatar) {
-    //       if (
-    //         !req.files.vendor_avatar[0].mimetype.startsWith("image") ||
-    //         req.files.vendor_avatar[0].size > 3000000
-    //       ) {
-    //         errorMessages.push("File must be an image and less than 3MB");
-    //       } else {
-    //         req.body.vendor_avatar = req.files.vendor_avatar[0].path;
-    //       }
-    //     }
-    //     if (req.files.vendor_header) {
-    //       if (
-    //         !req.files.vendor_header[0].mimetype.startsWith("image") ||
-    //         req.files.vendor_header[0].size > 3000000
-    //       ) {
-    //         errorMessages.push("File must be an image and less than 3MB");
-    //       } else {
-    //         req.body.vendor_header = req.files.vendor_header[0].path;
-    //       }
-    //     }
-    //   }
+      if (req.file) {
+        if (!req.file.mimetype.startsWith("image") || req.file.size > 3000000) {
+          errorMessages.push("File must be an image and less than 3MB");
+        } else {
+          req.body.avatar = req.file.path;
+        }
+      }
 
       if (errorMessages.length > 0) {
         return next({ statusCode: 400, messages: errorMessages });

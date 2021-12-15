@@ -3,12 +3,14 @@ import multer from "multer";
 
 import { register, login, authenticateUser } from "../middlewares/auth/auth";
 import { AuthController } from "../controllers/AuthController";
+import { UserController } from "../controllers/UserController";
 import { UserValidator } from "../middlewares/validators/UserValidator";
-import { cloudinary, storage } from "../config/Cloudinary";
+import { storage } from "../config/Cloudinary";
 
 const router = express.Router();
 const parser = multer({ storage });
 
+// register new user
 router.post(
   "/register",
   UserValidator.register,
@@ -16,8 +18,19 @@ router.post(
   AuthController.getToken
 );
 
+// login user
 router.post("/login", UserValidator.login, login, AuthController.getToken);
+
+// get current user data
 router.get("/user", authenticateUser, AuthController.getMe);
-router.put("/edit", parser.single("avatar"), UserValidator.update);
+
+// edit current user profile
+router.put(
+  "/edit",
+  parser.single("avatar"),
+  authenticateUser,
+  UserValidator.update,
+  UserController.update
+);
 
 export default router;
