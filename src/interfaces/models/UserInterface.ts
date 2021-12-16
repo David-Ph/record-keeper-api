@@ -7,4 +7,5 @@ export interface UserInterface extends Document {
   email: string;
   password: string;
   isValid: boolean;
+  verificationCode: string;
 }

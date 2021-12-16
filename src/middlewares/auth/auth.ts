@@ -5,6 +5,19 @@ import bcrypt from "bcrypt";
 import { Strategy as JWTStrategy } from "passport-jwt";
 import { ExtractJwt } from "passport-jwt";
 import { User } from "../../models";
+import nodemailer from "nodemailer";
+import {generateCode, setEmailContent} from "../../config/EmailVerification";
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.MAIL_USERNAME,
+    pass: process.env.MAIL_PASSWORD,
+    clientId: process.env.OAUTH_CLIENTID,
+    clientSecret: process.env.OAUTH_CLIENT_SECRET,
+    refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+  },
+});
 
 //? Logic to signup
 const register = (req: Request, res: Response, next: NextFunction) => {
@@ -34,6 +47,29 @@ passport.use(
     async (req, email, password, done) => {
       try {
         const data = await User.create(req.body);
+
+        if (data) {
+          const verificationCode = generateCode();
+          const emailContent = setEmailContent(req.body.username, verificationCode);
+
+          const mailOptions = {
+            from: process.env.MAIL_USERNAME,
+            to: data.email,
+            subject: 'Record Keeper Email Verification',
+            text: emailContent
+          };
+
+          data.verificationCode = verificationCode;
+          await data.save();
+
+          transporter.sendMail(mailOptions, function(err, data) {
+            if (err) {
+              console.log("Error " + err);
+            } else {
+              console.log("Email sent successfully");
+            }
+          });
+        }
 
         return done(null, data, { message: "User can be created" });
       } catch (e) {

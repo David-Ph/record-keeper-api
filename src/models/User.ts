@@ -20,11 +20,15 @@ const UserSchema = new mongoose.Schema<UserInterface>(
     },
     avatar: {
       type: String,
-      default: "https://res.cloudinary.com/davidph223/image/upload/v1639466353/records-keeper/14-147008_d-d-5th-edition-logo-latest-dd-logo_uvgoj8.png"
+      default:
+        "https://res.cloudinary.com/davidph223/image/upload/v1639466353/records-keeper/14-147008_d-d-5th-edition-logo-latest-dd-logo_uvgoj8.png",
     },
     isValid: {
       type: Boolean,
-      default: false
+      default: false,
+    },
+    verificationCode: {
+      type: String,
     },
   },
   {
@@ -39,9 +43,8 @@ const UserSchema = new mongoose.Schema<UserInterface>(
 );
 
 function setPassword(password: string) {
-    return bcrypt.hashSync(password, 10);
-  }
-  
+  return bcrypt.hashSync(password, 10);
+}
 
 const User = mongoose.model<UserInterface>("User", UserSchema);
 

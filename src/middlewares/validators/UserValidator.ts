@@ -15,11 +15,22 @@ class Validator {
       req.body.username = req.body.username ?? "";
       req.body.email = req.body.email ?? "";
       req.body.password = req.body.password ?? "";
+      req.body.verificationCode = req.body.verificationCode ?? "";
 
       const errorMessages: string[] = [];
 
       if (validator.isEmpty(req.body.username.toString())) {
         errorMessages.push("Username should not be empty");
+      }
+
+      if (!validator.isEmpty(req.body.verificationCode.toString())) {
+        errorMessages.push(
+          "Invalid request body: verificationCode is forbidden"
+        );
+      }
+
+      if (req.body.isValid && !validator.isEmpty(req.body.isValid.toString())) {
+        errorMessages.push("Invalid request body: isValid is forbidden");
       }
 
       if (validator.isEmpty(req.body.email.toString())) {
@@ -112,8 +123,20 @@ class Validator {
       req.body.email = req.body.email ?? findUser.email;
       req.body.password = req.body.password ?? findUser.password;
       req.body.avatar = req.body.avatar ?? findUser.avatar;
+      req.body.verificationCode = req.body.verificationCode ?? "";
+      req.body.isValid = req.body.isValid ?? "";
 
       const errorMessages: string[] = [];
+
+      if (!validator.isEmpty(req.body.verificationCode.toString())) {
+        errorMessages.push(
+          "Invalid request body: verificationCode is forbidden"
+        );
+      }
+
+      if (!validator.isEmpty(req.body.isValid.toString())) {
+        errorMessages.push("Invalid request body: isValid is forbidden");
+      }
 
       if (validator.isEmpty(req.body.username.toString())) {
         errorMessages.push("Username should not be empty");
