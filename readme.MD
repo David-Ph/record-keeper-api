@@ -2,6 +2,7 @@
 
 ### Todo:
     1. I think for now let's try to create user auth
+    2. User Auth Done. Let's try using nodemailer for sending email.
 
 1. User Login and Register
     - Email verification
