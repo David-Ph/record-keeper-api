@@ -1,7 +1,6 @@
 import * as dotenv from "dotenv";
 import mongoose, { ConnectOptions } from "mongoose";
 
-
 const MONGO_URI: string = process.env.MONGO_URI ?? "";
 
 mongoose
@@ -12,7 +11,6 @@ mongoose
   .then(() => console.log("Connected to MongoDB!"))
   .catch((err) => console.log(err));
 
+import { User } from "./User";
 
-import {User} from "./User";
-
-export {User}
+export { User };
