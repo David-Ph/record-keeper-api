@@ -1,3 +1,8 @@
+import path from "path";
+import * as dotenv from "dotenv";
+dotenv.config({
+  path: path.join(__dirname, `../../.env.${process.env.NODE_ENV}`),
+});
 import { addUsers, deleteUsers } from "./UserFactories";
 
 async function add() {
