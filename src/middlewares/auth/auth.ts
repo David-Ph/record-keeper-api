@@ -6,7 +6,7 @@ import { Strategy as JWTStrategy } from "passport-jwt";
 import { ExtractJwt } from "passport-jwt";
 import { User } from "../../models";
 import nodemailer from "nodemailer";
-import {generateCode, setEmailContent} from "../../config/EmailVerification";
+import { generateCode, setEmailContent } from "../../config/EmailVerification";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -50,19 +50,23 @@ passport.use(
 
         if (data) {
           const verificationCode = generateCode();
-          const emailContent = setEmailContent(req.body.username, verificationCode);
+          const emailContent = setEmailContent(
+            req.body.username,
+            verificationCode,
+            data._id.toString()
+          );
 
           const mailOptions = {
             from: process.env.MAIL_USERNAME,
             to: data.email,
-            subject: 'Record Keeper Email Verification',
-            text: emailContent
+            subject: "Record Keeper Email Verification",
+            text: emailContent,
           };
 
           data.verificationCode = verificationCode;
           await data.save();
 
-          transporter.sendMail(mailOptions, function(err, data) {
+          transporter.sendMail(mailOptions, function (err, data) {
             if (err) {
               console.log("Error " + err);
             } else {
@@ -169,4 +173,47 @@ passport.use(
 );
 // ? end of logic for user authorization
 
-export { register, login, authenticateUser };
+// ? Logic for verifiedUser
+const verifiedUser = (req: Request, res: Response, next: NextFunction) => {
+  passport.authorize("verifiedUser", { session: false }, (err, user, info) => {
+    if (err) {
+      return next({ message: err.message, statusCode: 403 });
+    }
+
+    if (!user) {
+      return next({ message: info.message, statusCode: 403 });
+    }
+
+    req.currentUser = user;
+
+    next();
+  })(req, res, next);
+};
+
+passport.use(
+  "verifiedUser",
+  new JWTStrategy(
+    {
+      secretOrKey: process.env.JWT_SECRET,
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    },
+    async (token, done) => {
+      try {
+        const data = await User.findOne({ _id: token.user });
+
+        if (data && data.isVerified) {
+          return done(null, data);
+        }
+
+        return done(null, false, {
+          message: "Forbidden access or Unverified Email",
+        });
+      } catch (error) {
+        return done(error, false, { message: "Forbidden access" });
+      }
+    }
+  )
+);
+// ? end of logic for verifiedUser
+
+export { register, login, authenticateUser, verifiedUser };

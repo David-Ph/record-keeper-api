@@ -6,6 +6,6 @@ export interface UserInterface extends Document {
   avatar: string;
   email: string;
   password: string;
-  isValid: boolean;
+  isVerified: boolean;
   verificationCode: string;
 }

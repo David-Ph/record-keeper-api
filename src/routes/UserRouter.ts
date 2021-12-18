@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
 
-import { register, login, authenticateUser } from "../middlewares/auth/auth";
+import { register, login, authenticateUser, verifiedUser } from "../middlewares/auth/auth";
 import { AuthController } from "../controllers/AuthController";
 import { UserController } from "../controllers/UserController";
 import { UserValidator } from "../middlewares/validators/UserValidator";
@@ -22,15 +22,18 @@ router.post(
 router.post("/login", UserValidator.login, login, AuthController.getToken);
 
 // get current user data
-router.get("/user", authenticateUser, AuthController.getMe);
+router.get("/user", verifiedUser, AuthController.getMe);
 
 // edit current user profile
 router.put(
   "/edit",
   parser.single("avatar"),
-  authenticateUser,
+  verifiedUser,
   UserValidator.update,
   UserController.update
 );
+
+// verify user
+router.get('/verify/:id/:code', AuthController.verifyCode)
 
 export default router;

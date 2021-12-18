@@ -29,8 +29,8 @@ class Validator {
         );
       }
 
-      if (req.body.isValid && !validator.isEmpty(req.body.isValid.toString())) {
-        errorMessages.push("Invalid request body: isValid is forbidden");
+      if (req.body.isVerified && !validator.isEmpty(req.body.isVerified.toString())) {
+        errorMessages.push("Invalid request body: isVerified is forbidden");
       }
 
       if (validator.isEmpty(req.body.email.toString())) {
@@ -124,7 +124,7 @@ class Validator {
       req.body.password = req.body.password ?? findUser.password;
       req.body.avatar = req.body.avatar ?? findUser.avatar;
       req.body.verificationCode = req.body.verificationCode ?? "";
-      req.body.isValid = req.body.isValid ?? "";
+      req.body.isVerified = req.body.isVerified ?? "";
 
       const errorMessages: string[] = [];
 
@@ -134,8 +134,8 @@ class Validator {
         );
       }
 
-      if (!validator.isEmpty(req.body.isValid.toString())) {
-        errorMessages.push("Invalid request body: isValid is forbidden");
+      if (!validator.isEmpty(req.body.isVerified.toString())) {
+        errorMessages.push("Invalid request body: isVerified is forbidden");
       }
 
       if (validator.isEmpty(req.body.username.toString())) {

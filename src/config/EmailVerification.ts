@@ -1,9 +1,17 @@
-const setEmailContent = (username: string, verificationCode: string) => {
+const setEmailContent = (
+  username: string,
+  verificationCode: string,
+  userId: string
+) => {
   const html = `
-        <h2>Hi ${username}!</h2>
-        <p>Thank you for registering to Records Keeper</p>
-        <p>Please click <a href=${process.env.HOST}/api/v1/auth/verify/${verificationCode}>here</a> to verify your account</p>
-    `;
+        <html>
+          <body>
+            <h2>Hi ${username}!</h2>
+            <p>Thank you for registering to Records Keeper</p>
+            <p>Please click <a href=${process.env.HOST}/api/v1/auth/verify/${userId}/${verificationCode}>here</a> to verify your account</p>
+          </body>
+        </html>
+        `;
 
   return html;
 };

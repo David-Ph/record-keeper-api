@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema<UserInterface>(
       default:
         "https://res.cloudinary.com/davidph223/image/upload/v1639466353/records-keeper/14-147008_d-d-5th-edition-logo-latest-dd-logo_uvgoj8.png",
     },
-    isValid: {
+    isVerified: {
       type: Boolean,
       default: false,
     },
