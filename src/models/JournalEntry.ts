@@ -4,12 +4,12 @@ import { JournalEntryInterface } from "../interfaces";
 const JournalEntrySchema = new mongoose.Schema<JournalEntryInterface>(
   {
     userId: {
-      type: Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: [true, "User ID Can't be empty"],
     },
     campaignId: {
-      type: Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Campaign",
       required: [true, "Campaign ID Can't be empty"],
     },

@@ -1,10 +1,10 @@
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
 import { CampaignInterface, CampaignStatus } from "../interfaces";
 
 const CampaignSchema = new mongoose.Schema<CampaignInterface>(
   {
     userId: {
-      type: Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: [true, "User ID Can't be empty"],
     },
