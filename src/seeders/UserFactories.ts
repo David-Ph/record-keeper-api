@@ -5,7 +5,7 @@ async function addUsers() {
   await User.create({
     username: "Saltshakers",
     email: "saltshakers@record-keeper.com",
-    password: "salt_is_white",
+    password: process.env.SALTSHAKER_PASSWORD,
     avatar:
       "https://w7.pngwing.com/pngs/948/158/png-transparent-digital-art-fan-art-others-art-technology-salt.png",
     isVerified: true,
@@ -14,7 +14,7 @@ async function addUsers() {
   await User.create({
     username: "Treefucqers",
     email: "treefucqers@record-keeper.com",
-    password: "we_fuck_trees",
+    password: process.env.TREEFUCQER_PASSWORD,
     avatar:
       "https://w1.pngwing.com/pngs/729/613/png-transparent-green-grass-tree-trunks-drawing-digital-art-fan-art-artist-art-blog-painting.png",
     isVerified: true,
