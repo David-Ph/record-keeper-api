@@ -12,5 +12,7 @@ mongoose
   .catch((err) => console.log(err));
 
 import { User } from "./User";
+import { Campaign } from "./Campaign";
+import { JournalEntry } from "./JournalEntry";
 
-export { User };
+export { User, Campaign, JournalEntry };

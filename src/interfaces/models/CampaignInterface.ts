@@ -1,6 +1,6 @@
 import { Document, Types } from "mongoose";
 
-enum CampaignStatus {
+export enum CampaignStatus {
   Completed = "Completed",
   Ongoing = "On Going",
   Dropped = "Dropped",
