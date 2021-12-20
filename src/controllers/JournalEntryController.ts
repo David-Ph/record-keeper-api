@@ -1,13 +1,13 @@
 import { Request, Response, NextFunction } from "express";
-import { Campaign } from "../models";
+import { JournalEntry } from "../models";
 
-class CampaignService {
+class JournalEntryService {
   async get(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = await Campaign.find();
+      const data = await JournalEntry.find();
 
       if (data.length === 0) {
-        return next({ statusCode: 404, message: "No Campaign Found" });
+        return next({ statusCode: 404, message: "No JournalEntry Found" });
       }
 
       res.status(200).json({ data });
@@ -18,10 +18,10 @@ class CampaignService {
 
   async getOne(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = await Campaign.findOne({ _id: req.params.id });
+      const data = await JournalEntry.findOne({ _id: req.params.id });
 
       if (!data) {
-        return next({ statusCode: 404, message: "No Campaign Found" });
+        return next({ statusCode: 404, message: "No Journal Entry Found" });
       }
 
       res.status(200).json({ data });
@@ -32,7 +32,7 @@ class CampaignService {
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = await Campaign.create(req.body);
+      const data = await JournalEntry.create(req.body);
 
       res.status(201).json({ data });
     } catch (error) {
@@ -42,7 +42,7 @@ class CampaignService {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = await Campaign.findOneAndUpdate(
+      const data = await JournalEntry.findOneAndUpdate(
         {
           _id: req.params.id,
         },
@@ -58,7 +58,7 @@ class CampaignService {
 
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = await Campaign.findOneAndDelete({ _id: req.params.id });
+      const data = await JournalEntry.findOneAndDelete({ _id: req.params.id });
 
       res.status(200).json({ data });
     } catch (error) {
@@ -67,5 +67,5 @@ class CampaignService {
   }
 }
 
-const CampaignController = new CampaignService();
-export { CampaignController };
+const JournalEntryController = new JournalEntryService();
+export { JournalEntryController };
