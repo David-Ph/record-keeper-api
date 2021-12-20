@@ -4,15 +4,13 @@ import { Campaign } from "../models";
 class CampaignService {
   async get(req: Request, res: Response, next: NextFunction) {
     try {
-      const newData = await Campaign.findOneAndUpdate(
-        {
-          _id: req.currentUser?._id,
-        },
-        req.body,
-        { new: true }
-      );
+      const data = await Campaign.find();
 
-      res.status(201).json({ newData });
+      if (!data.length) {
+        return next({ statusCode: 404, message: "No Campaign Found" });
+      }
+
+      res.status(201).json({ data });
     } catch (error) {
       next(error);
     }
@@ -20,15 +18,9 @@ class CampaignService {
 
   async getOne(req: Request, res: Response, next: NextFunction) {
     try {
-      const newData = await Campaign.findOneAndUpdate(
-        {
-          _id: req.currentUser?._id,
-        },
-        req.body,
-        { new: true }
-      );
+      const data = await Campaign.findOne({ _id: req.params.id });
 
-      res.status(201).json({ newData });
+      res.status(201).json({ data });
     } catch (error) {
       next(error);
     }
@@ -36,9 +28,9 @@ class CampaignService {
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const newData = await Campaign.create(req.body);
+      const data = await Campaign.create(req.body);
 
-      res.status(201).json({ newData });
+      res.status(201).json({ data });
     } catch (error) {
       next(error);
     }
@@ -46,15 +38,15 @@ class CampaignService {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const newData = await Campaign.findOneAndUpdate(
+      const data = await Campaign.findOneAndUpdate(
         {
-          _id: req.currentUser?._id,
+          _id: req.params.id,
         },
         req.body,
         { new: true }
       );
 
-      res.status(201).json({ newData });
+      res.status(201).json({ data });
     } catch (error) {
       next(error);
     }
@@ -62,15 +54,9 @@ class CampaignService {
 
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const newData = await Campaign.findOneAndUpdate(
-        {
-          _id: req.currentUser?._id,
-        },
-        req.body,
-        { new: true }
-      );
+      const data = await Campaign.findOneAndDelete({ _id: req.params.id });
 
-      res.status(201).json({ newData });
+      res.status(201).json({ data });
     } catch (error) {
       next(error);
     }
