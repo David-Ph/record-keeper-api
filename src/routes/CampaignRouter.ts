@@ -17,7 +17,7 @@ router.post(
 router.put(
   "/:id",
   verifiedUser,
-  CampaignValidator.update,
+  CampaignValidator.updateValidator,
   CampaignController.update
 );
 

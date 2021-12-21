@@ -70,7 +70,7 @@ class Validator {
     }
   }
 
-  async update(
+  async updateValidator(
     req: Request<{ id: string }, {}, CampaignInterface>,
     res: Response,
     next: NextFunction

@@ -4,7 +4,7 @@ import { JournalEntry } from "../models";
 class JournalEntryService {
   async get(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = await JournalEntry.find();
+      const data = await JournalEntry.find({ userId: req.currentUser?._id });
 
       if (data.length === 0) {
         return next({ statusCode: 404, message: "No JournalEntry Found" });
@@ -18,7 +18,10 @@ class JournalEntryService {
 
   async getOne(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = await JournalEntry.findOne({ _id: req.params.id });
+      const data = await JournalEntry.findOne({
+        _id: req.params.id,
+        userId: req.currentUser?._id,
+      });
 
       if (!data) {
         return next({ statusCode: 404, message: "No Journal Entry Found" });
@@ -58,7 +61,14 @@ class JournalEntryService {
 
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = await JournalEntry.findOneAndDelete({ _id: req.params.id });
+      const data = await JournalEntry.findOneAndDelete({
+        _id: req.params.id,
+        userId: req.currentUser?._id,
+      });
+
+      if (!data) {
+        return next({ statusCode: 404, message: "Journal Entry not found" });
+      }
 
       res.status(200).json({ data });
     } catch (error) {
