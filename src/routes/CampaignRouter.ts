@@ -1,14 +1,30 @@
 import express from "express";
 
 import { CampaignController } from "../controllers/CampaignController";
+import { CampaignValidator } from "../middlewares/validators/CampaignValidator";
+
+import { verifiedUser } from "../middlewares/auth/auth";
 
 const router = express.Router();
 
-// create new campaign
-router.post("/", CampaignController.create);
-router.get("/", CampaignController.get);
-router.get("/:id", CampaignController.getOne);
-router.put("/:id", CampaignController.update);
-router.delete("/:id", CampaignController.delete);
+router.post(
+  "/",
+  verifiedUser,
+  CampaignValidator.createValidator,
+  CampaignController.create
+);
+
+router.put(
+  "/:id",
+  verifiedUser,
+  CampaignValidator.update,
+  CampaignController.update
+);
+
+router.get("/", verifiedUser, CampaignController.get);
+router.get("/:id", verifiedUser, CampaignController.getOne);
+router.delete("/:id", verifiedUser, CampaignController.delete);
+
+
 
 export default router;

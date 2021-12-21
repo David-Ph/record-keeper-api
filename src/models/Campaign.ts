@@ -11,6 +11,7 @@ const CampaignSchema = new mongoose.Schema<CampaignInterface>(
     title: {
       type: String,
       required: [true, "Campaign title can't be empty"],
+      trim: true
     },
     status: {
       type: String,
@@ -25,10 +26,12 @@ const CampaignSchema = new mongoose.Schema<CampaignInterface>(
     dungeonMaster: {
       type: String,
       default: "Dungeon Master",
+      trim: true
     },
     description: {
       type: String,
       default: "Adventurers doing some adventure.",
+      trim: true
     },
   },
   {

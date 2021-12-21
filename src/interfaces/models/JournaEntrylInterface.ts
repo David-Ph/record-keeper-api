@@ -2,8 +2,8 @@ import { Document, Types } from "mongoose";
 
 export interface JournalEntryInterface extends Document {
   _id: Types.ObjectId;
-  userId: { type: Types.ObjectId; ref: "User" };
-  campaignId: { type: Types.ObjectId; ref: "Campaign" };
+  userId: Types.ObjectId;
+  campaignId: Types.ObjectId;
   title: string;
   body: string;
   slug: string;

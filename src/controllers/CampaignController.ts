@@ -4,7 +4,7 @@ import { Campaign } from "../models";
 class CampaignService {
   async get(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = await Campaign.find();
+      const data = await Campaign.find({ userId: req.currentUser?._id });
 
       if (data.length === 0) {
         return next({ statusCode: 404, message: "No Campaign Found" });
@@ -18,7 +18,10 @@ class CampaignService {
 
   async getOne(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = await Campaign.findOne({ _id: req.params.id });
+      const data = await Campaign.findOne({
+        _id: req.params.id,
+        userId: req.currentUser?._id,
+      });
 
       if (!data) {
         return next({ statusCode: 404, message: "No Campaign Found" });
@@ -58,7 +61,14 @@ class CampaignService {
 
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = await Campaign.findOneAndDelete({ _id: req.params.id });
+      const data = await Campaign.findOneAndDelete({
+        _id: req.params.id,
+        userId: req.currentUser?._id,
+      });
+
+      if (!data) {
+        return next({ statusCode: 404, message: "Campaign not found" });
+      }
 
       res.status(200).json({ data });
     } catch (error) {

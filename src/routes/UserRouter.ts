@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
 
-import { register, login, authenticateUser, verifiedUser } from "../middlewares/auth/auth";
+import { register, login, verifiedUser } from "../middlewares/auth/auth";
 import { AuthController } from "../controllers/AuthController";
 import { UserController } from "../controllers/UserController";
 import { UserValidator } from "../middlewares/validators/UserValidator";

@@ -7,11 +7,13 @@ const UserSchema = new mongoose.Schema<UserInterface>(
     username: {
       type: String,
       required: [true, "Username can't be empty"],
+      trim: true
     },
     email: {
       type: String,
       unique: true,
       required: [true, "Email can't be empty"],
+      trim: true
     },
     password: {
       type: String,

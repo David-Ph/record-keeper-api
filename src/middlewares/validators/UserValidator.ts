@@ -23,13 +23,28 @@ class Validator {
         errorMessages.push("Username should not be empty");
       }
 
+      if (
+        !validator.isAlphanumeric(req.body.username, "en-US", { ignore: "_-" })
+      ) {
+        errorMessages.push(
+          "Invalid username. Should only contain alphanumeric or '-' and '_'"
+        );
+      }
+
+      if (!validator.isLength(req.body.username, { min: 3, max: 25 })) {
+        errorMessages.push("Username has to be between 3 to 25 characters");
+      }
+
       if (!validator.isEmpty(req.body.verificationCode.toString())) {
         errorMessages.push(
           "Invalid request body: verificationCode is forbidden"
         );
       }
 
-      if (req.body.isVerified && !validator.isEmpty(req.body.isVerified.toString())) {
+      if (
+        req.body.isVerified &&
+        !validator.isEmpty(req.body.isVerified.toString())
+      ) {
         errorMessages.push("Invalid request body: isVerified is forbidden");
       }
 
@@ -41,12 +56,8 @@ class Validator {
         errorMessages.push("Password should not be empty");
       }
 
-      if (!validator.isLength(req.body.username, { min: 3, max: 25 })) {
-        errorMessages.push("Username has to be between 3 to 25 characters");
-      }
-
       if (
-        validator.isStrongPassword(req.body.password, {
+        !validator.isStrongPassword(req.body.password, {
           minLength: 6,
           minLowercase: 1,
           minUppercase: 1,
@@ -131,6 +142,14 @@ class Validator {
       if (!validator.isEmpty(req.body.verificationCode.toString())) {
         errorMessages.push(
           "Invalid request body: verificationCode is forbidden"
+        );
+      }
+
+      if (
+        !validator.isAlphanumeric(req.body.username, "en-US", { ignore: "_-" })
+      ) {
+        errorMessages.push(
+          "Invalid username. Should only contain alphanumeric or '-' and '_'"
         );
       }
 

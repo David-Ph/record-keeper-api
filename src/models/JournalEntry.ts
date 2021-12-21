@@ -1,4 +1,4 @@
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
 import { JournalEntryInterface } from "../interfaces";
 
 const JournalEntrySchema = new mongoose.Schema<JournalEntryInterface>(
@@ -16,10 +16,12 @@ const JournalEntrySchema = new mongoose.Schema<JournalEntryInterface>(
     title: {
       type: String,
       required: [true, "Journal Entry Title can't be empty"],
+      trim: true
     },
     body: {
       type: String,
       required: [true, "Journal Entry Body can't be empty"],
+      trim: true
     },
     excerpt: {
       type: String,

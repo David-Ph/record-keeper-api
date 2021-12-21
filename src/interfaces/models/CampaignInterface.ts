@@ -9,9 +9,9 @@ export enum CampaignStatus {
 
 export interface CampaignInterface extends Document {
   _id: Types.ObjectId;
-  userId: { type: Types.ObjectId; ref: "User" };
+  userId: Types.ObjectId;
   title: string;
   status: CampaignStatus;
-  dungeonMaster?: string;
-  description?: string;
+  dungeonMaster: string;
+  description: string;
 }
