@@ -64,6 +64,10 @@ class Validator {
         return next({ statusCode: 400, messages: errorMessages });
       }
 
+      req.body.title = validator.escape(req.body.title);
+      req.body.dungeonMaster = validator.escape(req.body.dungeonMaster);
+      req.body.description = validator.escape(req.body.description);
+
       next();
     } catch (error) {
       next(error);
@@ -133,6 +137,10 @@ class Validator {
       if (errorMessages.length > 0) {
         return next({ statusCode: 400, messages: errorMessages });
       }
+
+      req.body.title = validator.escape(req.body.title);
+      req.body.dungeonMaster = validator.escape(req.body.dungeonMaster);
+      req.body.description = validator.escape(req.body.description);
 
       next();
     } catch (error) {
