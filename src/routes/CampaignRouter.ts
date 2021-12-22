@@ -17,14 +17,24 @@ router.post(
 router.put(
   "/:id",
   verifiedUser,
+  CampaignValidator.getValidator,
   CampaignValidator.updateValidator,
   CampaignController.update
 );
 
+router.get(
+  "/:id",
+  verifiedUser,
+  CampaignValidator.getValidator,
+  CampaignController.getOne
+);
+router.delete(
+  "/:id",
+  verifiedUser,
+  CampaignValidator.getValidator,
+  CampaignController.delete
+);
+
 router.get("/", verifiedUser, CampaignController.get);
-router.get("/:id", verifiedUser, CampaignController.getOne);
-router.delete("/:id", verifiedUser, CampaignController.delete);
-
-
 
 export default router;

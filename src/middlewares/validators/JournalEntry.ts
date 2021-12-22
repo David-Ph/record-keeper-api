@@ -94,6 +94,21 @@ class Validator {
       next(error);
     }
   }
+
+  async getValidator(
+    req: Request<{ id: string }>,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      if (!Types.ObjectId.isValid(req.params.id)) {
+        return next({ statusCode: 400, message: "Invalid id" });
+      }
+      next();
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 const JournalEntryValidator = new Validator();

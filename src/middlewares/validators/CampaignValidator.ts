@@ -1,4 +1,5 @@
 import validator from "validator";
+import { Types } from "mongoose";
 import { Request, Response, NextFunction } from "express";
 
 import { CampaignInterface } from "../../interfaces";
@@ -142,6 +143,21 @@ class Validator {
       req.body.dungeonMaster = validator.escape(req.body.dungeonMaster);
       req.body.description = validator.escape(req.body.description);
 
+      next();
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getValidator(
+    req: Request<{ id: string }>,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      if (!Types.ObjectId.isValid(req.params.id)) {
+        return next({ statusCode: 400, message: "Invalid id" });
+      }
       next();
     } catch (error) {
       next(error);
