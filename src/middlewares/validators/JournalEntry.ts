@@ -1,5 +1,8 @@
 import validator from "validator";
+import slugify from "slugify";
+import striptags from "striptags";
 import { Request, Response, NextFunction } from "express";
+import { Types } from "mongoose";
 
 import { JournalEntryInterface } from "../../interfaces";
 import { JournalEntry } from "../../models";
@@ -23,6 +26,10 @@ class Validator {
         errorMessages.push("Title should be between 1 to 50 characters");
       }
 
+      if (!Types.ObjectId.isValid(req.body.campaignId)) {
+        errorMessages.push("Invalid Campaign ID");
+      }
+
       if (req.currentUser?._id) {
         req.body.userId = req.currentUser._id;
       }
@@ -30,6 +37,9 @@ class Validator {
       if (errorMessages.length > 0) {
         return next({ statusCode: 400, messages: errorMessages });
       }
+
+      req.body.slug = slugify(req.body.title);
+      req.body.excerpt = striptags(req.body.body);
 
       next();
     } catch (error) {
@@ -43,6 +53,17 @@ class Validator {
     next: NextFunction
   ) {
     try {
+      const findJournalEntry = await JournalEntry.findOne({
+        _id: req.params.id,
+        userId: req.currentUser?._id,
+      });
+      if (!findJournalEntry) {
+        return next({ statusCode: 404, message: "Campaign not found" });
+      }
+
+      req.body.title = req.body.title ?? findJournalEntry.title;
+      req.body.body = req.body.body ?? findJournalEntry.body;
+
       const errorMessages: string[] = [];
 
       if (req.body.userId) {
@@ -53,9 +74,20 @@ class Validator {
         errorMessages.push("Please do not try to edit campaignId");
       }
 
+      if (!validator.isLength(req.body.title.toString(), { min: 1, max: 50 })) {
+        errorMessages.push("Title should be between 1 to 50 characters");
+      }
+
+      if (!Types.ObjectId.isValid(req.body.campaignId)) {
+        errorMessages.push("Invalid Campaign ID");
+      }
+
       if (errorMessages.length > 0) {
         return next({ statusCode: 400, messages: errorMessages });
       }
+
+      req.body.slug = slugify(req.body.title);
+      req.body.excerpt = striptags(req.body.body);
 
       next();
     } catch (error) {
