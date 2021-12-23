@@ -1,7 +1,5 @@
-import { UserInterface } from "./models/UserInterface";
-import { CampaignInterface, CampaignStatus } from "./models/CampaignInterface";
-import { JournalEntryInterface } from "./models/JournaEntrylInterface";
-
-export { UserInterface, JournalEntryInterface, CampaignInterface };
-
-export { CampaignStatus };
+export { UserInterface } from "./models/UserInterface";
+export { JournalEntryInterface } from "./models/JournaEntrylInterface";
+export { CampaignInterface, CampaignStatus } from "./models/CampaignInterface";
+export { RecordInterface, RecordStatus } from "./models/RecordsInterface";
+export { CategoryInterface, CategoryType } from "./models/CategoryInterface";

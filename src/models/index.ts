@@ -11,8 +11,8 @@ mongoose
   .then(() => console.log("Connected to MongoDB!"))
   .catch((err) => console.log(err));
 
-import { User } from "./User";
-import { Campaign } from "./Campaign";
-import { JournalEntry } from "./JournalEntry";
-
-export { User, Campaign, JournalEntry };
+export { User } from "./User";
+export { Campaign } from "./Campaign";
+export { JournalEntry } from "./JournalEntry";
+export { Record } from "./Record";
+export { Category } from "./Category";
