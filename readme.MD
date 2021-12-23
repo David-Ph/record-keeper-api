@@ -8,6 +8,8 @@
     4. Setting up user isVerified is DONE!
     5. Next let's try setting up Records Campaign, Journal, and Journal Entry
     6. CRUD for Campaign and JournalEntry done. Let's do validation next.
+    7. Validation for Campaign and JournalEntry done. Let's do Category and Records next.
+    8. Then we can do search later.
 
 1. User Login and Register
 
@@ -44,7 +46,7 @@
    - User can create categories as they like i.e Characters, Places, Events, etc
    - Necessary fields:
      - Category name (string)
-     - icons (string) user can choose the icon for their category i.e weapons, people, etc.
+     - type (string) user can choose the icon for their category i.e weapons, people, etc.
      - user_id (foreign id)
      - campaign_id (foreign id)
      - color (string) -> users can change colors on category tab
@@ -57,4 +59,7 @@
      - description (string) this will show if user click the record to read more, maybe there will be a max length?
      - slug (string)
 
-Misc: - all these records should be searchable - Let's see if we can implement Web Socket here somehow. - maybe use cookie to try letting the user automatically select a campaign when they opened it again?
+Misc: 
+- all these records should be searchable and filterable?
+- Let's see if we can implement Web Socket here somehow. 
+- maybe use cookie to try letting the user automatically select a campaign when they opened it again?
