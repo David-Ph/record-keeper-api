@@ -34,6 +34,6 @@ router.put(
 );
 
 // verify user
-router.get('/verify/:id/:code', AuthController.verifyCode)
+router.get("/verify/:id/:code", AuthController.verifyCode);
 
 export default router;
