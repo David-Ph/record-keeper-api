@@ -4,7 +4,9 @@ import { JournalEntry } from "../models";
 class JournalEntryService {
   async get(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = await JournalEntry.find({ userId: req.currentUser?._id });
+      const data = await JournalEntry.find({ userId: req.currentUser?._id })
+        .lean()
+        .select("-userId -campaignId -__v");
 
       if (data.length === 0) {
         return next({ statusCode: 404, message: "No JournalEntry Found" });
@@ -21,7 +23,9 @@ class JournalEntryService {
       const data = await JournalEntry.findOne({
         _id: req.params.id,
         userId: req.currentUser?._id,
-      });
+      })
+        .lean()
+        .select("-userId -campaignId -__v");
 
       if (!data) {
         return next({ statusCode: 404, message: "No Journal Entry Found" });

@@ -85,10 +85,6 @@ class Validator {
 
       const errorMessages: string[] = [];
 
-      if (!Types.ObjectId.isValid(req.body.categoryId)) {
-        errorMessages.push("Invalid Category ID");
-      }
-
       if (!validator.isLength(req.body.title.toString(), { min: 1, max: 50 })) {
         errorMessages.push(
           "Category title has to be between 1 to 50 characters"

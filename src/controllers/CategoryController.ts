@@ -4,7 +4,9 @@ import { Category } from "../models";
 class CategoryService {
   async get(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = await Category.find({ userId: req.currentUser?._id });
+      const data = await Category.find({ userId: req.currentUser?._id })
+        .lean()
+        .select("-userId -campaignId -__v");
 
       if (data.length === 0) {
         return next({ statusCode: 404, message: "No Category Found" });
@@ -21,7 +23,9 @@ class CategoryService {
       const data = await Category.findOne({
         _id: req.params.id,
         userId: req.currentUser?._id,
-      });
+      })
+        .lean()
+        .select("-campaignId -userId -_-v");
 
       if (!data) {
         return next({ statusCode: 404, message: "No Category Found" });
@@ -51,7 +55,9 @@ class CategoryService {
         },
         req.body,
         { new: true }
-      );
+      )
+        .lean()
+        .select("-userId -campaignId");
 
       res.status(201).json({ data });
     } catch (error) {

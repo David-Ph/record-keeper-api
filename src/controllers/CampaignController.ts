@@ -4,7 +4,9 @@ import { Campaign } from "../models";
 class CampaignService {
   async get(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = await Campaign.find({ userId: req.currentUser?._id });
+      const data = await Campaign.find({ userId: req.currentUser?._id })
+        .lean()
+        .select("-userId -__v");
 
       if (data.length === 0) {
         return next({ statusCode: 404, message: "No Campaign Found" });
@@ -21,7 +23,9 @@ class CampaignService {
       const data = await Campaign.findOne({
         _id: req.params.id,
         userId: req.currentUser?._id,
-      });
+      })
+        .lean()
+        .select("-userId -__v");
 
       if (!data) {
         return next({ statusCode: 404, message: "No Campaign Found" });

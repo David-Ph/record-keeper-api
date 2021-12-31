@@ -94,10 +94,6 @@ class Validator {
         errorMessages.push("Category Color has to be hexadecimal color");
       }
 
-      if (!Types.ObjectId.isValid(req.body.campaignId)) {
-        errorMessages.push("Invalid Campaign ID");
-      }
-
       if (req.body.userId) {
         errorMessages.push("Please do not try to edit userId");
       }
@@ -108,10 +104,6 @@ class Validator {
 
       if (req.currentUser?._id) {
         req.body.userId = req.currentUser._id;
-      }
-
-      if (!Types.ObjectId.isValid(req.body.campaignId)) {
-        errorMessages.push("Invalid Campaign ID");
       }
 
       if (errorMessages.length > 0) {
