@@ -8,11 +8,6 @@ const RecordSchema = new mongoose.Schema<RecordInterface>(
       ref: "User",
       required: [true, "User ID Can't be empty"],
     },
-    campaignId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Campaign",
-      required: [true, "Campaign ID Can't be empty"],
-    },
     categoryId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
@@ -33,11 +28,6 @@ const RecordSchema = new mongoose.Schema<RecordInterface>(
       required: [true, "Campaign status can't be empty"],
     },
     description: {
-      type: String,
-      default: "Amazing adventure today!",
-      trim: true,
-    },
-    slug: {
       type: String,
       default: "Amazing adventure today!",
       trim: true,

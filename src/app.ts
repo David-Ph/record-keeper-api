@@ -12,6 +12,8 @@ import errorHandler from "./middlewares/errorHandler/errorHandler";
 import UserRouter from "./routes/UserRouter";
 import CampaignRouter from "./routes/CampaignRouter";
 import JournalEntryRouter from "./routes/JournalEntryRouter";
+import CategoryRouter from "./routes/CategoryRouter";
+import RecordRouter from "./routes/RecordRouter";
 
 //? Express Settings
 const app = express();
@@ -29,6 +31,8 @@ app.get("/api/v1/check", (req: Request, res: Response, next: NextFunction) => {
 app.use("/api/v1/auth", UserRouter);
 app.use("/api/v1/campaign", CampaignRouter);
 app.use("/api/v1/journal", JournalEntryRouter);
+app.use("/api/v1/category", CategoryRouter);
+app.use("/api/v1/record", RecordRouter);
 
 app.all("*", async (req, res, next) => {
   try {

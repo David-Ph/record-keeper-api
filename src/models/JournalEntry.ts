@@ -27,11 +27,6 @@ const JournalEntrySchema = new mongoose.Schema<JournalEntryInterface>(
       type: String,
       required: [true, "Journal Entry Excerpt can't be empty"],
     },
-    slug: {
-      type: String,
-      required: [true, "Journal Entry Slug can't be empty"],
-      unique: true,
-    },
   },
   {
     timestamps: {

@@ -6,6 +6,5 @@ export interface JournalEntryInterface extends Document {
   campaignId: Types.ObjectId;
   title: string;
   body: string;
-  slug: string;
   excerpt: string;
 }

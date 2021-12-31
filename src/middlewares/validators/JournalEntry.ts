@@ -1,5 +1,4 @@
 import validator from "validator";
-import slugify from "slugify";
 import striptags from "striptags";
 import { Request, Response, NextFunction } from "express";
 import { Types } from "mongoose";
@@ -38,7 +37,6 @@ class Validator {
         return next({ statusCode: 400, messages: errorMessages });
       }
 
-      req.body.slug = slugify(req.body.title);
       req.body.excerpt = striptags(req.body.body);
 
       next();
@@ -85,8 +83,6 @@ class Validator {
       if (errorMessages.length > 0) {
         return next({ statusCode: 400, messages: errorMessages });
       }
-
-      req.body.slug = slugify(req.body.title);
       req.body.excerpt = striptags(req.body.body);
 
       next();

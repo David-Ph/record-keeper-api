@@ -39,7 +39,6 @@
      - created_at
      - title
      - body
-     - slug
      - excerpt
 4. Records Category
 

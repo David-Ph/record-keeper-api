@@ -9,10 +9,8 @@ export enum RecordStatus {
 export interface RecordInterface extends Document {
   _id: Types.ObjectId;
   userId: Types.ObjectId;
-  campaignId: Types.ObjectId;
   categoryId: Types.ObjectId;
   title: string;
   description: string;
-  slug: string;
   status: RecordStatus;
 }
