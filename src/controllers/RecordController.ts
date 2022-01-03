@@ -4,7 +4,19 @@ import { Record } from "../models";
 class RecordService {
   async get(req: Request, res: Response, next: NextFunction) {
     try {
+      // pagination
+      const page = +req.query.page!;
+      const limit = +req.query.limit! || 15;
+      const skipCount = page > 0 ? (page - 1) * limit : 0;
+
+      // ? sorting
+      const sortField = req.query.sort || "createdAt";
+      const orderBy = req.query.order || "desc";
+
       const data = await Record.find({ userId: req.currentUser?._id })
+        .sort({ [sortField as string]: orderBy })
+        .limit(limit)
+        .skip(skipCount)
         .lean()
         .select("-userId -categoryId -__v");
 
@@ -12,7 +24,9 @@ class RecordService {
         return next({ statusCode: 404, message: "No Record Found" });
       }
 
-      res.status(200).json({ data });
+      const count = await Record.count();
+
+      res.status(200).json({ data, count });
     } catch (error) {
       next(error);
     }

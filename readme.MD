@@ -10,6 +10,7 @@
     6. CRUD for Campaign and JournalEntry done. Let's do validation next.
     7. Validation for Campaign and JournalEntry done. Let's do Category and Records next.
     8. Then we can do search later.
+    9. For now let's do pagination for: JournalEntry, Records, Campaign.
 
 1. User Login and Register
 
