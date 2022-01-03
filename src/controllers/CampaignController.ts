@@ -1,19 +1,37 @@
 import { Request, Response, NextFunction } from "express";
 import { Campaign } from "../models";
+import { QueryInterface } from "../interfaces";
 
 class CampaignService {
-  async get(req: Request, res: Response, next: NextFunction) {
+  async get(
+    req: Request<{}, {}, {}, QueryInterface>,
+    res: Response,
+    next: NextFunction
+  ) {
     try {
+      const query: any = {
+        userId: req.currentUser?._id,
+      };
+
+      if (req.query.status) query.status = req.query.status;
+
+      if (req.query.search)
+        query.$or = [
+          { title: new RegExp(req.query.search, "i") },
+          { description: new RegExp(req.query.search, "i") },
+          { dungeonMaster: new RegExp(req.query.search, "i") },
+        ];
+
       // pagination
-      const page = +req.query.page!;
-      const limit = +req.query.limit! || 15;
+      const page = +req.query.page;
+      const limit = +req.query.limit || 15;
       const skipCount = page > 0 ? (page - 1) * limit : 0;
 
-      // ? sorting
+      // sorting
       const sortField = req.query.sort || "createdAt";
       const orderBy = req.query.order || "desc";
 
-      const data = await Campaign.find({ userId: req.currentUser?._id })
+      const data = await Campaign.find(query)
         .sort({ [sortField as string]: orderBy })
         .limit(limit)
         .skip(skipCount)

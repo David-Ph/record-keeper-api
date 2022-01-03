@@ -11,6 +11,10 @@
     7. Validation for Campaign and JournalEntry done. Let's do Category and Records next.
     8. Then we can do search later.
     9. For now let's do pagination for: JournalEntry, Records, Campaign.
+    10. for campaign filter by status, and search for title, dungeonmaster, description
+    11. For records filter by status, and search for title, description
+    12. for journalentry search for title and body
+
 
 1. User Login and Register
 
