@@ -20,7 +20,7 @@ async function add() {
   await addRecord();
 }
 
-async function remove() {
+export async function remove() {
   await Promise.all([
     deleteUsers(),
     deleteCampaigns(),

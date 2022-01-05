@@ -26,8 +26,8 @@ const limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 mins
   max: 100,
 });
-
 const app = express();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
@@ -76,7 +76,11 @@ app.all("*", async (req, res, next) => {
 
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () =>
+if (process.env.NODE_ENV !== "test") {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () =>
   console.log(`App running on port ${PORT} ${process.env.NODE_ENV} server`)
 );
+}
+
+export default app;

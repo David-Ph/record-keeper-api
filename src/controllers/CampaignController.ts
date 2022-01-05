@@ -23,8 +23,8 @@ class CampaignService {
         ];
 
       // pagination
-      const page = +req.query.page;
-      const limit = +req.query.limit || 15;
+      const page = +req.query.page!;
+      const limit = +req.query.limit! || 15;
       const skipCount = page > 0 ? (page - 1) * limit : 0;
 
       // sorting
