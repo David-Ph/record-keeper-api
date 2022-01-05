@@ -6,6 +6,12 @@ dotenv.config({
 });
 
 import express, { Request, Response, NextFunction } from "express";
+import fs from "fs";
+import mongoSanitize from "express-mongo-sanitize";
+import rateLimit from "express-rate-limit";
+import helmet from "helmet";
+import cors from "cors";
+import morgan from "morgan";
 
 //? Import Files
 import errorHandler from "./middlewares/errorHandler/errorHandler";
@@ -16,9 +22,32 @@ import CategoryRouter from "./routes/CategoryRouter";
 import RecordRouter from "./routes/RecordRouter";
 
 //? Express Settings
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 mins
+  max: 100,
+});
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(mongoSanitize());
+app.use(limiter);
+app.use(helmet({ contentSecurityPolicy: false }));
+if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
+  app.use(morgan("dev"));
+} else {
+  // create a write stream (in append mode)
+  let accessLogStream = fs.createWriteStream(
+    path.join(__dirname, "access.log"),
+    {
+      flags: "a",
+    }
+  );
+
+  // setup the logger
+  app.use(morgan("combined", { stream: accessLogStream }));
+}
 
 //? Set Routes
 app.get("/api/v1/check", (req: Request, res: Response, next: NextFunction) => {
