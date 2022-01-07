@@ -27,10 +27,6 @@ class Validator {
         errorMessages.push("Title should be between 1 to 50 characters");
       }
 
-      if (validator.isEmpty(req.body.status.toString())) {
-        errorMessages.push("Status should not be empty");
-      }
-
       if (!CampaignStatus.includes(req.body.status.toString())) {
         errorMessages.push(
           "Invalid status. Choose between [On Going, Completed, Finished, On Going]"
@@ -51,10 +47,10 @@ class Validator {
       if (
         !validator.isLength(req.body.description.toString(), {
           min: 1,
-          max: 150,
+          max: 250,
         })
       ) {
-        errorMessages.push("Description should be between 1 to 150 characters");
+        errorMessages.push("Description should be between 1 to 250 characters");
       }
 
       if (req.currentUser?._id) {
