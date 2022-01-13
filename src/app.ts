@@ -79,8 +79,8 @@ app.use(errorHandler);
 if (process.env.NODE_ENV !== "test") {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () =>
-  console.log(`App running on port ${PORT} ${process.env.NODE_ENV} server`)
-);
+    console.log(`App running on port ${PORT} ${process.env.NODE_ENV} server`)
+  );
 }
 
 export default app;
