@@ -10,6 +10,8 @@
     "dev": "set NODE_ENV=development&& ts-node-dev --respawn --transpile-only --watch src src/app.ts",
     "seed:dev": "set NODE_ENV=development&& ts-node src/seeders add",
     "seed:dev:remove": "set NODE_ENV=development&& ts-node src/seeders remove",
+    "seed:prod": "set NODE_ENV=production&& ts-node src/seeders add",
+    "seed:prod:remove": "set NODE_ENV=production&& ts-node src/seeders remove",
     "test": "set NODE_ENV=test&& jest --testTimeout=20000 --coverage --forceExit"
   },
   "keywords": [],

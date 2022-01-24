@@ -15,10 +15,10 @@ class Validator {
     try {
       // fill out necessary fields
       // this is to avoid validator undefined error
-      req.body.categoryId = req.body.categoryId ?? "";
-      req.body.title = req.body.title ?? "";
-      req.body.description = req.body.description ?? "";
-      req.body.status = req.body.status ?? "";
+      req.body.categoryId = req.body.categoryId || "";
+      req.body.title = req.body.title || "";
+      req.body.description = req.body.description || "";
+      req.body.status = req.body.status || "";
 
       const errorMessages: string[] = [];
 
@@ -79,9 +79,9 @@ class Validator {
       }
       // fill out necessary fields
       // this is to avoid validator undefined error
-      req.body.title = req.body.title ?? findRecord.title;
-      req.body.description = req.body.description ?? findRecord.description;
-      req.body.status = req.body.status ?? findRecord.status;
+      req.body.title = req.body.title || findRecord.title;
+      req.body.description = req.body.description || findRecord.description;
+      req.body.status = req.body.status || findRecord.status;
 
       const errorMessages: string[] = [];
 

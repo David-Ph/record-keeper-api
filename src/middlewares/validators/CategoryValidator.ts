@@ -15,10 +15,10 @@ class Validator {
     try {
       // fill out necessary fields
       // this is to avoid validator undefined error
-      req.body.type = req.body.type ?? "";
-      req.body.name = req.body.name ?? "";
-      req.body.color = req.body.color ?? "";
-      req.body.campaignId = req.body.campaignId ?? "";
+      req.body.type = req.body.type || "";
+      req.body.name = req.body.name || "";
+      req.body.color = req.body.color || "";
+      req.body.campaignId = req.body.campaignId || "";
 
       const errorMessages: string[] = [];
 
@@ -74,9 +74,9 @@ class Validator {
         return next({ statusCode: 404, message: "Category not found" });
       }
 
-      req.body.name = req.body.name ?? findCategory.name;
-      req.body.color = req.body.color ?? findCategory.color;
-      req.body.type = req.body.type ?? findCategory.type;
+      req.body.name = req.body.name || findCategory.name;
+      req.body.color = req.body.color || findCategory.color;
+      req.body.type = req.body.type || findCategory.type;
 
       const errorMessages: string[] = [];
 

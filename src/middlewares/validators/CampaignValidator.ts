@@ -15,11 +15,11 @@ class Validator {
     try {
       // fill out necessary fields
       // this is to avoid validator undefined error
-      req.body.title = req.body.title ?? "";
-      req.body.status = req.body.status ?? "";
-      req.body.dungeonMaster = req.body.dungeonMaster ?? "Dungeon Master";
+      req.body.title = req.body.title || "";
+      req.body.status = req.body.status || "";
+      req.body.dungeonMaster = req.body.dungeonMaster || "Dungeon Master";
       req.body.description =
-        req.body.description ?? "Adventurers doing some adventure.";
+        req.body.description || "Adventurers doing some adventure.";
 
       const errorMessages: string[] = [];
 
@@ -85,11 +85,11 @@ class Validator {
         return next({ statusCode: 404, message: "Campaign not found" });
       }
 
-      req.body.title = req.body.title ?? findCampaign.title;
-      req.body.status = req.body.status ?? findCampaign.status;
+      req.body.title = req.body.title || findCampaign.title;
+      req.body.status = req.body.status || findCampaign.status;
       req.body.dungeonMaster =
-        req.body.dungeonMaster ?? findCampaign.dungeonMaster;
-      req.body.description = req.body.description ?? findCampaign.description;
+        req.body.dungeonMaster || findCampaign.dungeonMaster;
+      req.body.description = req.body.description || findCampaign.description;
 
       const errorMessages: string[] = [];
 

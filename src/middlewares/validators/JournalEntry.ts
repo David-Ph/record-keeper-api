@@ -15,9 +15,9 @@ class Validator {
     try {
       // fill out necessary fields
       // this is to avoid validator undefined error
-      req.body.title = req.body.title ?? "";
-      req.body.body = req.body.body ?? "";
-      req.body.campaignId = req.body.campaignId ?? "";
+      req.body.title = req.body.title || "";
+      req.body.body = req.body.body || "";
+      req.body.campaignId = req.body.campaignId || "";
 
       const errorMessages: string[] = [];
 
@@ -59,8 +59,8 @@ class Validator {
         return next({ statusCode: 404, message: "Campaign not found" });
       }
 
-      req.body.title = req.body.title ?? findJournalEntry.title;
-      req.body.body = req.body.body ?? findJournalEntry.body;
+      req.body.title = req.body.title || findJournalEntry.title;
+      req.body.body = req.body.body || findJournalEntry.body;
 
       const errorMessages: string[] = [];
 
