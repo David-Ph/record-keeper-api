@@ -128,7 +128,6 @@ class Validator {
       //   this is to ensure that blank body will not replace previous data
       req.body.username = req.body.username || findUser.username;
       req.body.email = req.body.email || findUser.email;
-      req.body.password = req.body.password || findUser.password;
       req.body.avatar = req.body.avatar || findUser.avatar;
       req.body.verificationCode = findUser.verificationCode;
       req.body.isVerified = findUser.isVerified;
