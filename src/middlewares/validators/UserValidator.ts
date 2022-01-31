@@ -151,6 +151,7 @@ class Validator {
       }
 
       if (
+        req.body.password &&
         !validator.isStrongPassword(req.body.password, {
           minLength: 6,
           minLowercase: 1,
