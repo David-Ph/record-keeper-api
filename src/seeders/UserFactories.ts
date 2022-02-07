@@ -20,6 +20,15 @@ async function addUsers() {
     isVerified: true,
   });
 
+  await User.create({
+    username: "Guest",
+    email: "guest@record-keeper.com",
+    password: process.env.GUEST_PASSWORD,
+    avatar:
+      "https://w1.pngwing.com/pngs/729/613/png-transparent-green-grass-tree-trunks-drawing-digital-art-fan-art-artist-art-blog-painting.png",
+    isVerified: true,
+  });
+
   console.log("Users has been seeded");
 }
 

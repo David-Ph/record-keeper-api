@@ -3,7 +3,7 @@ import striptags from "striptags";
 import { Request, Response, NextFunction } from "express";
 import { Types } from "mongoose";
 
-import { JournalEntryInterface } from "../../interfaces";
+import { JournalEntryInterface, QueryInterface } from "../../interfaces";
 import { JournalEntry } from "../../models";
 
 class Validator {
@@ -92,13 +92,21 @@ class Validator {
   }
 
   async getValidator(
-    req: Request<{ id: string }>,
+    req: Request<{ id: string }, {}, {}, QueryInterface>,
     res: Response,
     next: NextFunction
   ) {
     try {
-      if (!Types.ObjectId.isValid(req.params.id)) {
-        return next({ statusCode: 400, message: "Invalid id" });
+      if (req.params.id) {
+        if (!Types.ObjectId.isValid(req.params.id)) {
+          return next({ statusCode: 400, message: "Invalid id" });
+        }
+      }
+
+      if (req.query.campaignId) {
+        if (!Types.ObjectId.isValid(req.query.campaignId)) {
+          return next({ statusCode: 400, message: "Invalid id" });
+        }
       }
       next();
     } catch (error) {

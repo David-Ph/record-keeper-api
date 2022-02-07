@@ -13,6 +13,8 @@ class JournalEntryService {
         userId: req.currentUser?._id,
       };
 
+      if (req.query.campaignId) query.campaignId = req.query.campaignId;
+
       if (req.query.search)
         query.$or = [
           { title: new RegExp(req.query.search, "i") },

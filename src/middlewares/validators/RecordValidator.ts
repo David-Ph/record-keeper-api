@@ -2,7 +2,7 @@ import validator from "validator";
 import { Types } from "mongoose";
 import { Request, Response, NextFunction } from "express";
 
-import { RecordInterface } from "../../interfaces";
+import { RecordInterface, QueryInterface } from "../../interfaces";
 import { RecordStatus } from "../../config/Options";
 import { Record } from "../../models";
 
@@ -132,13 +132,21 @@ class Validator {
   }
 
   async getValidator(
-    req: Request<{ id: string }>,
+    req: Request<{ id: string }, {}, {}, QueryInterface>,
     res: Response,
     next: NextFunction
   ) {
     try {
-      if (!Types.ObjectId.isValid(req.params.id)) {
-        return next({ statusCode: 400, message: "Invalid id" });
+      if (req.params.id) {
+        if (!Types.ObjectId.isValid(req.params.id)) {
+          return next({ statusCode: 400, message: "Invalid id" });
+        }
+      }
+
+      if (req.query.campaignId) {
+        if (!Types.ObjectId.isValid(req.query.campaignId)) {
+          return next({ statusCode: 400, message: "Invalid id" });
+        }
       }
       next();
     } catch (error) {

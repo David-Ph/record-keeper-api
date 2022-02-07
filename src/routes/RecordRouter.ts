@@ -35,6 +35,11 @@ router.delete(
   RecordController.delete
 );
 
-router.get("/", verifiedUser, RecordController.get);
+router.get(
+  "/",
+  verifiedUser,
+  RecordValidator.getValidator,
+  RecordController.get
+);
 
 export default router;

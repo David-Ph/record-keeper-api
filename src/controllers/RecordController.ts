@@ -13,6 +13,8 @@ class RecordService {
         userId: req.currentUser?._id,
       };
 
+      if (req.query.campaignId) query.campaignId = req.query.campaignId;
+
       if (req.query.status) query.status = req.query.status;
 
       if (req.query.search)

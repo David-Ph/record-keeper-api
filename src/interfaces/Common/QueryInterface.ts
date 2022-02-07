@@ -7,4 +7,5 @@ export interface QueryInterface {
   sort?: string;
   search?: string;
   status?: string;
+  campaignId?: string | Types.ObjectId;
 }

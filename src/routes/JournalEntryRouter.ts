@@ -21,8 +21,18 @@ router.put(
   JournalEntryController.update
 );
 
-router.get("/", verifiedUser, JournalEntryController.get);
-router.get("/:id", verifiedUser, JournalEntryController.getOne);
+router.get(
+  "/",
+  verifiedUser,
+  JournalEntryValidator.getValidator,
+  JournalEntryController.get
+);
+router.get(
+  "/:id",
+  verifiedUser,
+  JournalEntryValidator.getValidator,
+  JournalEntryController.getOne
+);
 router.delete("/:id", verifiedUser, JournalEntryController.delete);
 
 export default router;
