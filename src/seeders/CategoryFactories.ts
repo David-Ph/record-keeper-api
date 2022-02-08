@@ -5,21 +5,23 @@ async function addCategory() {
   const user = await User.findOne().lean().select("_id")!;
   const campaign = await Campaign.findOne().lean().select("_id");
 
-  await Category.create({
-    userId: user?._id,
-    campaignId: campaign?._id,
-    name: "People we met",
-    type: "Misc",
-    color: "#ffffff",
-  });
+  for (let i = 0; i < 3; i++) {
+    await Category.create({
+      userId: user?._id,
+      campaignId: campaign?._id,
+      name: "People we met",
+      type: "Misc",
+      color: "#ffffff",
+    });
 
-  await Category.create({
-    userId: user?._id,
-    campaignId: campaign?._id,
-    name: "People we killed",
-    type: "Misc",
-    color: "#000000",
-  });
+    await Category.create({
+      userId: user?._id,
+      campaignId: campaign?._id,
+      name: "People we killed",
+      type: "Misc",
+      color: "#000000",
+    });
+  }
 
   console.log("Category has been seeded");
 }

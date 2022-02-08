@@ -5,21 +5,23 @@ async function addRecord() {
   const user = await User.findOne().lean().select("_id")!;
   const category = await Category.findOne().lean().select("_id");
 
-  await Record.create({
-    userId: user?._id,
-    categoryId: category?._id,
-    title: "Loot we stole from the dragon today",
-    description: "WE'RE FILTHY RICH",
-    status: "Normal",
-  });
+  for (let i = 0; i < 5; i++) {
+    await Record.create({
+      userId: user?._id,
+      categoryId: category?._id,
+      title: "Loot we stole from the dragon today",
+      description: "WE'RE FILTHY RICH",
+      status: "Normal",
+    });
 
-  await Record.create({
-    userId: user?._id,
-    categoryId: category?._id,
-    title: "Wolf",
-    description: "Wolf is an ass",
-    status: "Normal",
-  });
+    await Record.create({
+      userId: user?._id,
+      categoryId: category?._id,
+      title: "Wolf",
+      description: "Wolf is an ass",
+      status: "Normal",
+    });
+  }
 
   console.log("Record has been seeded");
 }
