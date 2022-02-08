@@ -1,5 +1,7 @@
 import validator from "validator";
 import striptags from "striptags";
+import { getExcerptFromString } from "../../lib/functions";
+
 import { Request, Response, NextFunction } from "express";
 import { Types } from "mongoose";
 
@@ -37,7 +39,9 @@ class Validator {
         return next({ statusCode: 400, messages: errorMessages });
       }
 
-      req.body.excerpt = striptags(req.body.body);
+      const strippedText = striptags(req.body.body);
+
+      req.body.excerpt = getExcerptFromString(strippedText);
 
       next();
     } catch (error) {
@@ -83,7 +87,10 @@ class Validator {
       if (errorMessages.length > 0) {
         return next({ statusCode: 400, messages: errorMessages });
       }
-      req.body.excerpt = striptags(req.body.body);
+
+      const strippedText = striptags(req.body.body);
+
+      req.body.excerpt = getExcerptFromString(strippedText);
 
       next();
     } catch (error) {
