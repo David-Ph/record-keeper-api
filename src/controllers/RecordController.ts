@@ -43,7 +43,7 @@ class RecordService {
         return next({ statusCode: 404, message: "No Record Found" });
       }
 
-      const count = await Record.count();
+      const count = await Record.count(query);
 
       res.status(200).json({ data, count });
     } catch (error) {

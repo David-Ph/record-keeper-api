@@ -41,7 +41,7 @@ class JournalEntryService {
         return next({ statusCode: 404, message: "No JournalEntry Found" });
       }
 
-      const count = await JournalEntry.count();
+      const count = await JournalEntry.count(query);
 
       res.status(200).json({ data, count });
     } catch (error) {
