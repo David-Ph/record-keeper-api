@@ -1,5 +1,22 @@
 ## An App for taking notes in DnD 5e campaign.
 
+# What is this project meant to be?
+
+I started this project because I wanted to test my typescript knowledge after learning a typescript course.
+
+# What is this project?
+
+During our DnD session, we notice that most of the note taking app doesn't quite fit our needs, that's why I started building this.
+
+# Tools used
+
+- Typescript
+- Express
+- Cloudinary
+- Bcrypt
+- Passport
+- Nodemailer
+
 ### Todo:
 
     1. I think for now let's try to create user auth
